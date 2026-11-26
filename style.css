@@ -90,14 +90,6 @@ button:active {
   transform: scale(0.99);
 }
 
-.edit-btn {
-  background-color: #f7600d;
-}
-
-.edit-btn:hover {
-  background-color: #dc5207;
-}
-
 .info-box {
   background-color: #f8fafc;
   border: 1px solid #e2e8f0;
@@ -118,7 +110,6 @@ hr {
   font-size: 0.88rem;
   margin-top: 8px;
 }
-
 .notice-msg {
   background-color: #eff6ff;
   border: 1px solid #bfdbfe;
@@ -139,11 +130,10 @@ hr {
 .phone-link:hover {
   text-decoration: underline;
 }
-
 .owner-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .owner-name {
@@ -152,15 +142,12 @@ hr {
   color: #0f172a;
 }
 
-.whatsapp-btn,
-.call-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+.whatsapp-btn {
+  display: block;
   width: 100%;
   padding: 12px 16px;
   border-radius: 10px;
+  background-color: #16a34a;
   color: #ffffff;
   text-decoration: none;
   font-size: 0.98rem;
@@ -169,23 +156,10 @@ hr {
   transition: background-color 0.2s, transform 0.1s;
 }
 
-.whatsapp-btn {
-  background-color: #16a34a;
-}
-
 .whatsapp-btn:hover {
   background-color: #15803d;
 }
 
-.call-btn {
-  background-color: #0284c7;
-}
-
-.call-btn:hover {
-  background-color: #0369a1;
-}
-
-.whatsapp-btn:active,
-.call-btn:active {
+.whatsapp-btn:active {
   transform: scale(0.99);
 }
