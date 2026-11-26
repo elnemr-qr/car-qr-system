@@ -39,7 +39,7 @@ async function initCardFlow() {
     const snap = await getDoc(cardRef);
 
     if (!snap.exists()) {
-      app.innerHTML = `<p class="error-msg">الكارت (${escapeHtml(cardId)}) غير مسجل في النظام.</p>`;
+      app.innerHTML = `<p class="error-msg">الكارت (${cardId}) غير مسجل في النظام.</p>`;
       return;
     }
 
@@ -56,15 +56,6 @@ async function initCardFlow() {
   }
 }
 
-function escapeHtml(str) {
-  return String(str ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
 function formatWhatsAppNumber(rawPhone) {
   let cleaned = String(rawPhone || "").replace(/\D/g, "");
 
@@ -77,19 +68,9 @@ function formatWhatsAppNumber(rawPhone) {
   return cleaned;
 }
 
-function formatCallNumber(rawPhone) {
-  let cleaned = String(rawPhone || "").replace(/[^\d+]/g, "");
-
-  if (cleaned.startsWith("00")) {
-    cleaned = "+" + cleaned.slice(2);
-  }
-
-  return cleaned;
-}
-
 function renderRegisterForm(cardRef, cardId) {
   app.innerHTML = `
-    <h2>تفعيل كارت جديد (${escapeHtml(cardId)})</h2>
+    <h2>تفعيل كارت جديد (${cardId})</h2>
     <form id="registerForm">
       <div class="field">
         <label for="nameInput">الاسم</label>
@@ -142,28 +123,21 @@ function renderRegisterForm(cardRef, cardId) {
 
 function renderProfileView(cardRef, cardId, cardData) {
   const waPhone = formatWhatsAppNumber(cardData.phone);
-  const callPhone = formatCallNumber(cardData.phone);
   const waMessage = encodeURIComponent(
     `مرحباً ${cardData.ownerName}، تواصلت معك بخصوص الكارت (${cardId}).`
   );
   const whatsappUrl = `https://wa.me/${waPhone}?text=${waMessage}`;
-  const callUrl = `tel:${callPhone}`;
 
   app.innerHTML = `
-    <h2>بيانات المالك</h2>
+    <h2>بيانات الكارت (${cardId})</h2>
     <p class="notice-msg">عفواً لو عربيتي مسببالك أي إزعاج، يسعدني تواصلك معي فوراً:</p>
     <div class="info-box owner-card">
-      <p class="owner-name"><strong>المالك:</strong> ${escapeHtml(cardData.ownerName)}</p>
+      <p class="owner-name"><strong>المالك:</strong> ${cardData.ownerName}</p>
       <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">
-        <span>💬</span>
-        <span>للتواصل واتساب</span>
-      </a>
-      <a href="${callUrl}" class="call-btn">
-        <span>📞</span>
-        <span>اتصال مباشر</span>
+        للتواصل واتساب
       </a>
     </div>
-    <button id="editBtn" class="edit-btn" type="button">تعديل البيانات</button>
+    <button id="editBtn" type="button">تعديل البيانات</button>
     <div id="editSection"></div>
   `;
 
@@ -216,15 +190,15 @@ function renderEditForm(cardRef, cardId, cardData) {
 
   editSection.innerHTML = `
     <hr />
-    <h3>تعديل بيانات المالك</h3>
+    <h3>تعديل بيانات الكارت (${cardId})</h3>
     <form id="editForm">
       <div class="field">
         <label for="editNameInput">الاسم</label>
-        <input type="text" id="editNameInput" value="${escapeHtml(cardData.ownerName)}" required />
+        <input type="text" id="editNameInput" value="${cardData.ownerName}" required />
       </div>
       <div class="field">
         <label for="editPhoneInput">رقم التليفون</label>
-        <input type="tel" id="editPhoneInput" value="${escapeHtml(cardData.phone)}" required />
+        <input type="tel" id="editPhoneInput" value="${cardData.phone}" required />
       </div>
       <button type="submit">حفظ التعديلات</button>
       <p id="editError" class="error-msg"></p>
@@ -264,6 +238,3 @@ function renderEditForm(cardRef, cardId, cardData) {
     }
   });
 }
-```[cite: 1, 2, 3]
-
-هل تحب نضيف أي لمسة إضافية في الصفحة (مثل إظهار رقم المالك أو تغيير شكل الخلفية أو الأيقونات)؟
