@@ -39,7 +39,7 @@ async function initCardFlow() {
     const snap = await getDoc(cardRef);
 
     if (!snap.exists()) {
-      app.innerHTML = `<p class="error-msg">الكارت (${escapeHtml(cardId)}) غير مسجل في النظام.</p>`;
+      app.innerHTML = `<p class="error-msg">هذا الكود غير مسجل في النظام.</p>`;
       return;
     }
 
@@ -89,7 +89,7 @@ function formatCallNumber(rawPhone) {
 
 function renderRegisterForm(cardRef, cardId) {
   app.innerHTML = `
-    <h2>تفعيل كارت جديد (${escapeHtml(cardId)})</h2>
+    <h2>تفعيل بيانات المالك</h2>
     <form id="registerForm">
       <div class="field">
         <label for="nameInput">الاسم</label>
@@ -144,7 +144,7 @@ function renderProfileView(cardRef, cardId, cardData) {
   const waPhone = formatWhatsAppNumber(cardData.phone);
   const callPhone = formatCallNumber(cardData.phone);
   const waMessage = encodeURIComponent(
-    `مرحباً ${cardData.ownerName}، تواصلت معك بخصوص الكارت (${cardId}).`
+    `مرحباً ${cardData.ownerName}، تواصلت معك بخصوص السيارة.`
   );
   const whatsappUrl = `https://wa.me/${waPhone}?text=${waMessage}`;
   const callUrl = `tel:${callPhone}`;
